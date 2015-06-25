@@ -3,6 +3,8 @@
 #
 import os
 
+from six import string_types
+
 from django.conf import settings
 from django.core.files.base import File
 from django.core.exceptions import ImproperlyConfigured
@@ -32,7 +34,7 @@ class LibCloudStorage(Storage):
             extra_kwargs['region'] = self.provider['region']
         try:
             provider_type = self.provider['type']
-            if isinstance(provider_type, basestring):
+            if isinstance(provider_type, string_types):
                 module_path, tag = provider_type.rsplit('.', 1)
                 if module_path != 'libcloud.storage.types.Provider':
                     raise ValueError("Invalid module path")
